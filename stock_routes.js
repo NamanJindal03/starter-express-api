@@ -419,19 +419,18 @@ router.get('/stock-prices', (req, res) => {
         return;
     }
     
-    const symbolsArray = JSON.parse(symbolsQueryParam);
+    const symbolsArray = symbolsQueryParam;
     console.log(symbolsArray);
     
     function filterAndFormatStockData(symbols) {
-        // const filtered = stockPricesJSON.filter(stock => ['MMM', 'AOS', 'ABT'].includes(stock.symbol))
-        const filtered = stockPricesJSON.filter(stock => symbols.includes(stock.symbol))
-        // console.log(filtered)
-        // .map(stock => ({
-        //     symbol: stock.symbol,
-        //     price: stock.price,
-        //     "52-week-low": stock["52-week-low"],
-        //     "52-week-high": stock["52-week-high"],
-        // }));
+        return stockPricesJSON
+        .filter(stock => symbols.includes(stock.symbol))
+        .map(stock => ({
+            symbol: stock.symbol,
+            price: stock.price,
+            "52-week-low": stock["52-week-low"],
+            "52-week-high": stock["52-week-high"],
+        }));
     }
 
     const result = filterAndFormatStockData(symbolsArray);
