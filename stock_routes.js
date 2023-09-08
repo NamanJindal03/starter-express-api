@@ -204,12 +204,6 @@ const stockPricesJSON = [
       "52-week-high": 68.8
     },
     {
-      "symbol": "A",
-      "price": 65.05,
-      "52-week-low": 75,
-      "52-week-high": 49.23
-    },
-    {
       "symbol": "APD",
       "price": 152.8,
       "52-week-low": 175.17,
@@ -425,22 +419,21 @@ router.get('/stock-prices', (req, res) => {
         return;
     }
     
-    const symbolsArray = symbolsQueryParam;
+    const symbolsArray = JSON.parse(symbolsQueryParam);
+    console.log(symbolsArray);
     
-    // Filter the stock data based on the provided symbols
-    // Function to filter and format the data based on the provided symbols
     function filterAndFormatStockData(symbols) {
-        return stockPricesJSON
-        .filter(stock => symbols.includes(stock.symbol))
-        .map(stock => ({
-            symbol: stock.symbol,
-            price: stock.price,
-            "52-week-low": stock["52-week-low"],
-            "52-week-high": stock["52-week-high"],
-        }));
+        // const filtered = stockPricesJSON.filter(stock => ['MMM', 'AOS', 'ABT'].includes(stock.symbol))
+        const filtered = stockPricesJSON.filter(stock => symbols.includes(stock.symbol))
+        // console.log(filtered)
+        // .map(stock => ({
+        //     symbol: stock.symbol,
+        //     price: stock.price,
+        //     "52-week-low": stock["52-week-low"],
+        //     "52-week-high": stock["52-week-high"],
+        // }));
     }
 
-    // Filter and format the stock data based on the provided symbols
     const result = filterAndFormatStockData(symbolsArray);
     
     res.json(result);
