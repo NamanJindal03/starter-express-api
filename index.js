@@ -13,4 +13,5 @@ app.get('/apitest', (req,res) => {
         'name': 'naman'
     })
 })
+app.use('/stock', require('./stock_routes'));
 app.listen(process.env.PORT || 3000)
